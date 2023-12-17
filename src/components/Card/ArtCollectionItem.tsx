@@ -1,24 +1,31 @@
 import {ArtObject} from '../../api/types';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {ArrowForward} from '../icons';
-import {Bookmark} from '../icons/bookmark.tsx';
+import {ArrowForward, Bookmark, EmptyBookmark} from '../icons';
 import {useAppNavigation} from '../../hooks/appNavigation.ts';
 import {ROUTES} from '../../router/routes.ts';
+import {useStore} from '../../store';
+import {useCallback, useMemo} from 'react';
 
 export const ArtCollectionItem = (props: ArtObject) => {
-  const isSelected = false;
   const router = useAppNavigation();
-  console.log('props??', props);
+
+  const {getBookmarks, addBookMarks, bookmarks} = useStore();
+  const isSelected = useCallback(() => {
+    return getBookmarks().some(entry => entry.id === props.id);
+  }, [getBookmarks, props.id]);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.bookmarkBtn}>
-        <Bookmark
-          stroke="black"
-          width={44}
-          height={44}
-          fill={isSelected ? 'black' : 'none'}
-        />
+      <TouchableOpacity
+        onPress={() => addBookMarks(props)}
+        disabled={isSelected()}
+        style={styles.bookmarkBtn}>
+        {isSelected() ? (
+          <Bookmark stroke="black" width={44} height={44} fill={'white'} />
+        ) : (
+          <EmptyBookmark stroke="black" width={44} height={44} fill={'white'} />
+        )}
       </TouchableOpacity>
       <FastImage
         style={styles.imgContainer}

@@ -1,6 +1,6 @@
 import {Text} from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import {ROUTES} from '../router/routes.ts';
+import {ROUTES} from '../router/routes';
 import {getRijksArtCollection} from '../api/rijksMuseum';
 import {FlashList} from '@shopify/flash-list';
 import {ArtCollectionItem} from '../components/Card/ArtCollectionItem';

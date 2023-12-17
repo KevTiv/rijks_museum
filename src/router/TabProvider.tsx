@@ -4,7 +4,8 @@ import {BooksmarksScreen} from '../screens';
 import {RootTabNavigationParams} from './route.types';
 import {ROUTES} from './routes';
 import {NavigationContainer} from '@react-navigation/native';
-import {Bookmark, Museum} from '../components/icons';
+import {EmptyBookmark, Museum} from '../components/icons';
+import {Bookmark} from '../components/icons/bookmark.tsx';
 
 const Tab = createBottomTabNavigator<RootTabNavigationParams>();
 
@@ -34,8 +35,8 @@ export const TabNavigator = () => {
             tabBarIcon: () => (
               <Bookmark
                 stroke="white"
-                width={32}
-                height={32}
+                width={20}
+                height={24}
                 fill="currentColor"
               />
             ),

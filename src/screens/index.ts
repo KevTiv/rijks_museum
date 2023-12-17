@@ -1,6 +1,6 @@
-import {HomeScreen} from './home.tsx';
-import {ArtistScreen} from './artist.tsx';
-import {ArtScreen} from './art.tsx';
-import {BooksmarksScreen} from './bookmarks.tsx';
+import {HomeScreen} from './home';
+import {ArtistScreen} from './artist';
+import {ArtScreen} from './art';
+import {BooksmarksScreen} from './bookmarks';
 
 export {HomeScreen, ArtistScreen, ArtScreen, BooksmarksScreen};

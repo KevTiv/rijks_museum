@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {RIJKS_KEY, RIKS_API_URL} from '@env';
+import {RijksDataApiResponse} from './types';
 
 export async function getRijksArtCollection({
   artPieceId = '',
@@ -13,7 +14,7 @@ export async function getRijksArtCollection({
   }`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get<RijksDataApiResponse>(url);
     return response.data;
   } catch (error) {
     throw new Error('API Error');

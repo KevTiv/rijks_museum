@@ -1,3 +1,3 @@
-import {TabNavigator} from './TabProvider.tsx';
+import {TabNavigator} from './TabProvider';
 
 export {TabNavigator};

@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ArtScreen, HomeScreen, ArtistScreen} from '../screens';
-import {MuseumStacksRoutePrams} from './route.types.ts';
-import {ROUTES} from './routes.ts';
+import {MuseumStacksRoutePrams} from './route.types';
+import {ROUTES} from './routes';
 
 const Stack = createNativeStackNavigator<MuseumStacksRoutePrams>();
 

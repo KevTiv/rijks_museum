@@ -6,35 +6,19 @@
  */
 
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {TabNavigator} from './src/router';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {TabNavigator} from './src/router';
 
+const client = new QueryClient();
 function App(): React.JSX.Element {
   return (
     <SafeAreaProvider style={{flex: 1}}>
-      <TabNavigator />
+      <QueryClientProvider client={client}>
+        <TabNavigator />
+      </QueryClientProvider>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

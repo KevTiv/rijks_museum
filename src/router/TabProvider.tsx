@@ -11,7 +11,11 @@ export const TabNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name={ROUTES.MUSEUM} component={MuseumStackNavigation} />
+        <Tab.Screen
+          name={ROUTES.MUSEUM}
+          component={MuseumStackNavigation}
+          options={{headerShown: false}}
+        />
         <Tab.Screen name={ROUTES.BOOKMARKS} component={BooksmarksScreen} />
       </Tab.Navigator>
     </NavigationContainer>

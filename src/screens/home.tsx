@@ -4,12 +4,13 @@ import {ROUTES} from '../router/routes.ts';
 import {getRijksArtCollection} from '../api/rijksMuseum.ts';
 
 export const HomeScreen = () => {
-  const {data: homeArtList} = useQuery({
+  const {data: homeArtList, isLoading} = useQuery({
     queryKey: [ROUTES.MUSEUM],
     queryFn: () => getRijksArtCollection({}),
   });
 
-  console.log(homeArtList);
+  console.log('homeArtList??', isLoading, homeArtList);
+
   return (
     <View>
       <Text>Home Screen</Text>

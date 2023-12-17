@@ -1,7 +1,5 @@
 import axios from 'axios';
-import Config from 'react-native-config';
-
-const URL_API = 'https://www.rijksmuseum.nl/api/en/collection/';
+import {RIJKS_KEY, RIKS_API_URL} from '@env';
 
 export async function getRijksArtCollection({
   artPieceId = '',
@@ -10,30 +8,14 @@ export async function getRijksArtCollection({
   imgOnly = true,
   artist = '',
 }) {
-  const params = new URLSearchParams();
-
-  Object.entries({
-    key: Config.RIJKS_KEY,
-    p: page,
-    ps: resultsPerPage,
-    imgonly: imgOnly,
-    involvedMaker: artist,
-  }).forEach(([key, value]) => {
-    if (value !== '' || value !== undefined) {
-      params.append(key, String(value));
-    }
-  });
+  const url = `${RIKS_API_URL}${artPieceId}?key=${RIJKS_KEY}&p=${page}&ps=${resultsPerPage}&imgonly=${imgOnly}${
+    artist.length > 0 ? `&involvedMaker=${artist}` : ''
+  }`;
 
   try {
-    const response = await axios.get<RijksDataApiResponse>(
-      `${URL_API}${artPieceId}`,
-      {
-        params,
-      },
-    );
-
+    const response = await axios.get(url);
     return response.data;
-  } catch {
+  } catch (error) {
     throw new Error('API Error');
   }
 }

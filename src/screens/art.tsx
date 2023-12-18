@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ScreenContainer} from '../components/container/screenContainer';
+import {ScreenContainer} from '../components/screenContainer';
 import FastImage from 'react-native-fast-image';
 import {useAppNavigation, useAppRoute} from '../hooks/appNavigation';
 import {ROUTES} from '../router/routes';

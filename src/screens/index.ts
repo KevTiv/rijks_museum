@@ -1,6 +1,6 @@
 import {HomeScreen} from './home';
 import {ArtistScreen} from './artist';
 import {ArtScreen} from './art';
-import {BooksmarksScreen} from './bookmarks';
+import {BookmarksScreen} from './bookmarks';
 
-export {HomeScreen, ArtistScreen, ArtScreen, BooksmarksScreen};
+export {HomeScreen, ArtistScreen, ArtScreen, BookmarksScreen};

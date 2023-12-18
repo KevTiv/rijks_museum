@@ -2,26 +2,29 @@ import {ArtObject} from '../../api/types';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ArrowForward, Bookmark, EmptyBookmark} from '../icons';
-import {useAppNavigation} from '../../hooks/appNavigation.ts';
-import {ROUTES} from '../../router/routes.ts';
-import {useStore} from '../../store';
-import {useCallback, useMemo} from 'react';
+import {useAppNavigation} from '../../hooks/appNavigation';
+import {ROUTES} from '../../router/routes';
+import {useBookmarkStore} from '../../store';
+import {useCallback} from 'react';
 
-export const ArtCollectionItem = (props: ArtObject) => {
+type ArtCollectionItemProps = ArtObject;
+export const ArtCollectionItem = (props: ArtCollectionItemProps) => {
+  const {id, webImage, longTitle, principalOrFirstMaker} = props;
   const router = useAppNavigation();
-
-  const {getBookmarks, addBookMarks, bookmarks} = useStore();
-  const isSelected = useCallback(() => {
-    return getBookmarks().some(entry => entry.id === props.id);
-  }, [getBookmarks, props.id]);
+  const {addBookMarks, getBookmarks} = useBookmarkStore();
+  const getIsBookmarkSelected = useCallback(
+    (bookmarkId?: string) =>
+      getBookmarks().some(entry => entry.id === bookmarkId),
+    [getBookmarks],
+  );
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => addBookMarks(props)}
-        disabled={isSelected()}
+        disabled={getIsBookmarkSelected(id)}
         style={styles.bookmarkBtn}>
-        {isSelected() ? (
+        {getIsBookmarkSelected(id) ? (
           <Bookmark stroke="black" width={44} height={44} fill={'white'} />
         ) : (
           <EmptyBookmark stroke="black" width={44} height={44} fill={'white'} />
@@ -29,18 +32,18 @@ export const ArtCollectionItem = (props: ArtObject) => {
       </TouchableOpacity>
       <FastImage
         style={styles.imgContainer}
-        source={{uri: props.webImage?.url}}
+        source={{uri: webImage?.url}}
         resizeMode={FastImage.resizeMode.cover}
       />
       <View style={styles.info}>
-        <Text style={styles.cardTitle}>{props?.longTitle}</Text>
-        <Text style={styles.artist}>By {props?.principalOrFirstMaker}</Text>
+        <Text style={styles.cardTitle}>{longTitle}</Text>
+        <Text style={styles.artist}>By {principalOrFirstMaker}</Text>
       </View>
       <TouchableOpacity
         style={styles.bottomNavBtn}
-        disabled={props?.id === undefined}
+        disabled={id === undefined}
         onPress={() => {
-          if (props?.id) {
+          if (id) {
             router.navigate(ROUTES.ART, props);
           }
         }}>

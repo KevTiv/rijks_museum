@@ -1,6 +1,6 @@
 import {create, StateCreator} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
-import {ArtObject} from '../api/types.ts';
+import {ArtObject} from '../api/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type BookmarkedArtObject = {
@@ -9,6 +9,14 @@ type BookmarkedArtObject = {
   addBookMarks: (artObject: ArtObject) => void;
   deleteBookmarks: (artObjectId: string) => void;
   getBookmarkById: (id: string) => ArtObject | undefined;
+  updateBookmarks: (artObject: ArtObject) => void;
+};
+
+export type UserAction = 'manage' | 'location' | undefined;
+type BookmarkUserAction = {
+  action?: UserAction;
+  getCurrentAction: () => UserAction;
+  setCurrentAction: (action: UserAction) => void;
 };
 
 const createBookmarkedArtObjectSlice: StateCreator<BookmarkedArtObject> = (
@@ -18,17 +26,9 @@ const createBookmarkedArtObjectSlice: StateCreator<BookmarkedArtObject> = (
   bookmarks: [],
   getBookmarks: () => get().bookmarks,
   addBookMarks: artObject => {
-    set(state => {
-      if (!state.bookmarks.some(obj => obj.id === artObject.id)) {
-        return {
-          bookmarks: [...state.bookmarks, artObject],
-        };
-      } else {
-        return {
-          bookmarks: [...state.bookmarks, artObject],
-        };
-      }
-    });
+    set(state => ({
+      bookmarks: [...state.bookmarks, artObject],
+    }));
   },
   deleteBookmarks: artObjectId => {
     set(state => ({
@@ -38,12 +38,30 @@ const createBookmarkedArtObjectSlice: StateCreator<BookmarkedArtObject> = (
   getBookmarkById: id => {
     return get().bookmarks.find(entry => entry.id === id);
   },
+  updateBookmarks: artObject => {
+    set(state => ({
+      bookmarks: state.bookmarks.map(obj =>
+        obj.id === artObject.id ? artObject : obj,
+      ),
+    }));
+  },
 });
 
-export const useStore = create(
+const createUserBookMarksAction: StateCreator<BookmarkUserAction> = (
+  set,
+  get,
+) => ({
+  action: undefined,
+  getCurrentAction: () => get().action,
+  setCurrentAction: action => set({action}),
+});
+
+export const useBookmarkStore = create(
   persist(createBookmarkedArtObjectSlice, {
     name: 'bookmarked-art-objects', // unique name for persisting the state
     // include other persist configuration if needed
     storage: createJSONStorage(() => AsyncStorage),
   }),
 );
+
+export const userUserAction = create(createUserBookMarksAction);

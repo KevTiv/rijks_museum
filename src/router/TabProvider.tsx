@@ -1,10 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MuseumStackNavigation} from './StackProvidder';
-import {BooksmarksScreen} from '../screens';
+import {BookmarksScreen} from '../screens';
 import {RootTabNavigationParams} from './route.types';
 import {ROUTES} from './routes';
 import {NavigationContainer} from '@react-navigation/native';
-import {EmptyBookmark, Museum} from '../components/icons';
+import {Museum} from '../components/icons';
 import {Bookmark} from '../components/icons/bookmark.tsx';
 
 const Tab = createBottomTabNavigator<RootTabNavigationParams>();
@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator<RootTabNavigationParams>();
 export const TabNavigator = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName={ROUTES.MUSEUM}>
         <Tab.Screen
           name={ROUTES.MUSEUM}
           component={MuseumStackNavigation}
@@ -30,7 +30,7 @@ export const TabNavigator = () => {
         />
         <Tab.Screen
           name={ROUTES.BOOKMARKS}
-          component={BooksmarksScreen}
+          component={BookmarksScreen}
           options={{
             tabBarIcon: () => (
               <Bookmark

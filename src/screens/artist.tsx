@@ -5,7 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 import {getRijksArtCollection} from '../api/rijksMuseum';
 import {FlashList} from '@shopify/flash-list';
 import {ArtCollectionItem} from '../components/Card/ArtCollectionItem';
-import {ScreenContainer} from '../components/container/screenContainer';
+import {ScreenContainer} from '../components/screenContainer';
 
 export const ArtistScreen = () => {
   const {params} = useAppRoute<typeof ROUTES.ARTIST>();

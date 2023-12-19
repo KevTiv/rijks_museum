@@ -1,3 +1,4 @@
+import {useCallback} from 'react';
 import {
   Text,
   StyleSheet,
@@ -12,19 +13,40 @@ import {useAppNavigation, useAppRoute} from '../hooks/appNavigation';
 import {ROUTES} from '../router/routes';
 import {useQuery} from '@tanstack/react-query';
 import {getRijksArtCollection} from '../api/rijksMuseum';
+import {appTheme} from '../theme';
+import {Bookmark, Download} from '../components/icons';
+import {useBookmarkStore} from '../store';
+import {Loading} from '../components/loading';
+import {useDownloadImage} from '../hooks/downloadImage';
 
 export const ArtScreen = () => {
   const router = useAppNavigation();
   const {params} = useAppRoute<typeof ROUTES.ART>();
-  const artPieceId = params.id?.split('-').slice(1).join('-');
+
+  // Remove the "EN-" "NL-" identifier at the beginning of the id
+  const artPieceId = params.id?.split('-').slice(1).join('-') ?? '';
   const {data: artPiece, isLoading} = useQuery({
-    queryKey: [`${ROUTES.ART}-${params.id}`],
+    queryKey: [`${ROUTES.ART}`, params.id],
     queryFn: () =>
       getRijksArtCollection({
         artPieceId,
       }),
     enabled: !!artPieceId,
   });
+
+  const {handleDownloadImage} = useDownloadImage();
+  const {getBookmarkById, deleteBookmarks, addBookMarks} = useBookmarkStore();
+  const bookmarkStatus = getBookmarkById(params.id) ? 'Bookmarked' : 'Bookmark';
+  const handleBookmarkStatusClick = useCallback(
+    (id?: string) => {
+      if (id && getBookmarkById(id)) {
+        deleteBookmarks(id);
+      } else if (!getBookmarkById(id) && artPiece?.artObject) {
+        addBookMarks(artPiece.artObject);
+      }
+    },
+    [addBookMarks, artPiece?.artObject, deleteBookmarks, getBookmarkById],
+  );
 
   return (
     <ScreenContainer>
@@ -34,20 +56,53 @@ export const ArtScreen = () => {
           source={{uri: params?.webImage?.url}}
           resizeMode={FastImage.resizeMode.cover}
         />
-        {artPiece && !isLoading && (
+        <Loading isLoading={isLoading} />
+        {artPiece && (
           <>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                if (artPiece?.artObject?.principalMaker) {
-                  router.navigate(ROUTES.ARTIST, {
-                    name: artPiece.artObject.principalMaker,
-                  });
-                }
-              }}>
-              <Text style={styles.artist}>
-                {artPiece?.artObject?.principalMaker}
-              </Text>
-            </TouchableWithoutFeedback>
+            <View>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  if (artPiece?.artObject?.principalMaker) {
+                    router.navigate(ROUTES.ARTIST, {
+                      name: artPiece.artObject.principalMaker,
+                    });
+                  }
+                }}>
+                <Text style={styles.artist}>
+                  {artPiece?.artObject?.principalMaker}
+                </Text>
+              </TouchableWithoutFeedback>
+
+              <View style={styles.download}>
+                <TouchableOpacity
+                  onPress={() => handleBookmarkStatusClick(params?.id)}
+                  disabled={getBookmarkById(params.id) !== undefined}>
+                  <View style={styles.artQuickAction}>
+                    <Bookmark
+                      fill={
+                        getBookmarkById(params.id) !== undefined
+                          ? appTheme.colors.primary
+                          : appTheme.colors.text
+                      }
+                    />
+                    <Text style={{color: 'white'}}>{bookmarkStatus}</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={async () => {
+                    if (params?.id && params.webImage?.url) {
+                      await handleDownloadImage(
+                        params?.id,
+                        params.webImage?.url,
+                      );
+                    }
+                  }}
+                  style={styles.artQuickAction}>
+                  <Download />
+                  <Text style={{color: 'white'}}>Download image</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
 
             <Text style={styles.title}>{params?.longTitle}</Text>
             <Text style={styles.description}>
@@ -67,22 +122,6 @@ export const ArtScreen = () => {
                 Location: {artPiece?.artObject?.location}
               </Text>
             )}
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-around',
-              }}>
-              <TouchableOpacity>
-                <Text style={styles.subLabel}>Add to bokmarks</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.subLabel}>remove from bokmarks</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.subLabel}>download</Text>
-              </TouchableOpacity>
-            </View>
           </>
         )}
       </ScrollView>
@@ -100,28 +139,42 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     marginVertical: 8,
-    color: 'blue',
+    color: appTheme.colors.primary,
+  },
+  artQuickAction: {
+    marginVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   title: {
     fontSize: 24,
     fontWeight: '700',
+    color: appTheme.colors.text,
   },
   description: {
     fontSize: 16,
     fontWeight: '500',
     paddingVertical: 8,
     marginHorizontal: 2,
+    color: appTheme.colors.text,
   },
   subLabel: {
     fontSize: 12,
     fontWeight: '500',
     paddingVertical: 8,
     paddingHorizontal: 4,
+    color: appTheme.colors.text,
   },
   imgContainer: {
     width: '100%',
     height: 350,
     borderRadius: 8,
     opacity: 0.9,
+  },
+  download: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
 });

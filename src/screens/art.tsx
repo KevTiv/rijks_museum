@@ -26,7 +26,7 @@ export const ArtScreen = () => {
   // Remove the "EN-" "NL-" identifier at the beginning of the id
   const artPieceId = params.id?.split('-').slice(1).join('-') ?? '';
   const {data: artPiece, isLoading} = useQuery({
-    queryKey: [`${ROUTES.ART}`, params.id],
+    queryKey: [ROUTES.ART, params.id],
     queryFn: () =>
       getRijksArtCollection({
         artPieceId,

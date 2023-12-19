@@ -10,7 +10,7 @@ import {EmptyList} from '../components/emptyList';
 export const HomeScreen = () => {
   const {data: homeArtList, isLoading} = useQuery({
     queryKey: [ROUTES.MUSEUM],
-    queryFn: () => getRijksArtCollection({resultsPerPage: 50}),
+    queryFn: () => getRijksArtCollection({resultsPerPage: 450}),
   });
 
   return (
@@ -21,7 +21,7 @@ export const HomeScreen = () => {
           data={homeArtList?.artObjects}
           keyExtractor={(item, index) => item?.id ?? index.toString()}
           renderItem={({item}) => <ArtCollectionItem {...item} />}
-          estimatedItemSize={50}
+          estimatedItemSize={450}
           ListEmptyComponent={EmptyList}
         />
       )}

@@ -14,10 +14,11 @@ export const ArtistScreen = () => {
   const {params} = useAppRoute<typeof ROUTES.ARTIST>();
 
   const {data: artist, isLoading} = useQuery({
-    queryKey: [`${ROUTES.ARTIST}`, params.name],
+    queryKey: [ROUTES.ARTIST, params.name],
     queryFn: () =>
       getRijksArtCollection({
         artist: params.name,
+        resultsPerPage: 450,
       }),
     enabled: !!params.name,
   });
@@ -34,7 +35,7 @@ export const ArtistScreen = () => {
             data={artist?.artObjects}
             keyExtractor={(item, index) => item?.id ?? index.toString()}
             renderItem={({item}) => <ArtCollectionItem {...item} />}
-            estimatedItemSize={50}
+            estimatedItemSize={450}
             ListEmptyComponent={EmptyList}
           />
         </>

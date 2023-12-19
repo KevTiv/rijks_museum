@@ -36,7 +36,8 @@ class DownloadRijksArtImage: RCTEventEmitter {
     }
     task.resume()
   }
-
+  
+  // MARK: - Save image to photo gallery
   private func saveImageToPhotos(_ image: UIImage, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     if #available(iOS 14, *) {
       PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in

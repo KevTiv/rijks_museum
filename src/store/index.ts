@@ -3,7 +3,7 @@ import {createJSONStorage, persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ArtObject} from '../api/types';
 
-type BookmarkedArtObject = {
+export type BookmarkedArtObject = {
   bookmarks: ArtObject[];
   getBookmarks: () => ArtObject[];
   addBookMarks: (artObject: ArtObject) => void;
@@ -19,10 +19,9 @@ type BookmarkUserAction = {
   setCurrentAction: (action: UserAction) => void;
 };
 
-const createBookmarkedArtObjectSlice: StateCreator<BookmarkedArtObject> = (
-  set,
-  get,
-) => ({
+export const createBookmarkedArtObjectSlice: StateCreator<
+  BookmarkedArtObject
+> = (set, get) => ({
   bookmarks: [],
   getBookmarks: () => get().bookmarks,
   addBookMarks: artObject => {

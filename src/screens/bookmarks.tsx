@@ -17,7 +17,7 @@ export const BookmarksScreen = () => {
       setCurrentAction(getCurrentAction() !== action ? action : undefined),
     [getCurrentAction, setCurrentAction],
   );
-  const filteredBookmarks = useMemo(() => {
+  const filteredBookmarks = useCallback(() => {
     return userInput?.length > 0
       ? getBookmarks().filter(
           entry =>
@@ -36,7 +36,7 @@ export const BookmarksScreen = () => {
       />
       {getBookmarks().length > 0 && (
         <FlashList
-          data={filteredBookmarks}
+          data={filteredBookmarks()}
           estimatedItemSize={50}
           keyExtractor={item => item.id!}
           numColumns={2}

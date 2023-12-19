@@ -5,6 +5,7 @@ import {getRijksArtCollection} from '../api/rijksMuseum';
 import {ArtCollectionItem} from '../components/Card/ArtCollectionItem';
 import {ScreenContainer} from '../components/screenContainer';
 import {Loading} from '../components/loading';
+import {EmptyList} from '../components/emptyList';
 
 export const HomeScreen = () => {
   const {data: homeArtList, isLoading} = useQuery({
@@ -21,6 +22,7 @@ export const HomeScreen = () => {
           keyExtractor={(item, index) => item?.id ?? index.toString()}
           renderItem={({item}) => <ArtCollectionItem {...item} />}
           estimatedItemSize={50}
+          ListEmptyComponent={EmptyList}
         />
       )}
     </ScreenContainer>

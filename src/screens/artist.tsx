@@ -8,6 +8,7 @@ import {ArtCollectionItem} from '../components/Card/ArtCollectionItem';
 import {ScreenContainer} from '../components/screenContainer';
 import {appTheme} from '../theme';
 import {Loading} from '../components/loading';
+import {EmptyList} from '../components/emptyList';
 
 export const ArtistScreen = () => {
   const {params} = useAppRoute<typeof ROUTES.ARTIST>();
@@ -34,6 +35,7 @@ export const ArtistScreen = () => {
             keyExtractor={(item, index) => item?.id ?? index.toString()}
             renderItem={({item}) => <ArtCollectionItem {...item} />}
             estimatedItemSize={50}
+            ListEmptyComponent={EmptyList}
           />
         </>
       )}

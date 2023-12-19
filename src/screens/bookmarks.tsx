@@ -5,6 +5,7 @@ import {useBookmarkStore, UserAction, userUserAction} from '../store';
 import {ScreenContainer} from '../components/screenContainer';
 import {BookmarkItem} from '../components/Card/BookmarkItem';
 import {BookmarksUserActions} from '../components/BookmarksUserActions';
+import {EmptyList} from '../components/emptyList';
 
 export const BookmarksScreen = () => {
   const [userInput, setUserInput] = useState<string>('');
@@ -40,6 +41,7 @@ export const BookmarksScreen = () => {
           keyExtractor={item => item.id!}
           numColumns={2}
           renderItem={({item}) => <BookmarkItem {...item} />}
+          ListEmptyComponent={EmptyList}
         />
       )}
     </ScreenContainer>

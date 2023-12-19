@@ -1,29 +1,34 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
 import {MuseumStackNavigation} from './StackProvidder';
 import {BookmarksScreen} from '../screens';
 import {RootTabNavigationParams} from './route.types';
 import {ROUTES} from './routes';
-import {NavigationContainer} from '@react-navigation/native';
 import {Museum} from '../components/icons';
-import {Bookmark} from '../components/icons/bookmark.tsx';
+import {Bookmark} from '../components/icons/bookmark';
+import {appTheme} from '../theme';
 
 const Tab = createBottomTabNavigator<RootTabNavigationParams>();
 
 export const TabNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={appTheme}>
       <Tab.Navigator initialRouteName={ROUTES.MUSEUM}>
         <Tab.Screen
           name={ROUTES.MUSEUM}
           component={MuseumStackNavigation}
           options={{
             headerShown: false,
-            tabBarIcon: () => (
+            tabBarIcon: ({focused, size, color}) => (
               <Museum
-                width={24}
-                height={24}
-                stroke="currentColor"
-                fill="currentColor"
+                stroke={color}
+                width={size}
+                height={size}
+                fill={
+                  focused
+                    ? 'rgba(255, 255, 255, 1)'
+                    : 'rgba(255, 255, 255, 0.7)'
+                }
               />
             ),
           }}
@@ -32,12 +37,16 @@ export const TabNavigator = () => {
           name={ROUTES.BOOKMARKS}
           component={BookmarksScreen}
           options={{
-            tabBarIcon: () => (
+            tabBarIcon: ({focused, size, color}) => (
               <Bookmark
-                stroke="white"
-                width={20}
-                height={24}
-                fill="currentColor"
+                stroke={color}
+                width={size}
+                height={size}
+                fill={
+                  focused
+                    ? 'rgba(255, 255, 255, 1)'
+                    : 'rgba(255, 255, 255, 0.7)'
+                }
               />
             ),
           }}

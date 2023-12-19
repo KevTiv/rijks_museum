@@ -1,12 +1,14 @@
+import {useCallback, useMemo, useState} from 'react';
 import {FlashList} from '@shopify/flash-list';
 
 import {useBookmarkStore, UserAction, userUserAction} from '../store';
 import {ScreenContainer} from '../components/screenContainer';
 import {BookmarkItem} from '../components/Card/BookmarkItem';
 import {BookmarksUserActions} from '../components/BookmarksUserActions';
-import {useCallback} from 'react';
 
 export const BookmarksScreen = () => {
+  const [userInput, setUserInput] = useState<string>('');
+
   const {getBookmarks} = useBookmarkStore();
   const {setCurrentAction, getCurrentAction} = userUserAction();
   const handleAction = useCallback(
@@ -14,13 +16,26 @@ export const BookmarksScreen = () => {
       setCurrentAction(getCurrentAction() !== action ? action : undefined),
     [getCurrentAction, setCurrentAction],
   );
+  const filteredBookmarks = useMemo(() => {
+    return userInput?.length > 0
+      ? getBookmarks().filter(
+          entry =>
+            entry.title?.includes(userInput) ||
+            entry.principalOrFirstMaker?.includes(userInput),
+        )
+      : getBookmarks();
+  }, [getBookmarks, userInput]);
 
   return (
     <ScreenContainer>
-      <BookmarksUserActions handleAction={handleAction} />
+      <BookmarksUserActions
+        handleAction={handleAction}
+        userInput={userInput}
+        setUserInput={setUserInput}
+      />
       {getBookmarks().length > 0 && (
         <FlashList
-          data={getBookmarks()}
+          data={filteredBookmarks}
           estimatedItemSize={50}
           keyExtractor={item => item.id!}
           numColumns={2}

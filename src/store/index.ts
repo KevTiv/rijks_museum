@@ -1,18 +1,18 @@
 import {create, StateCreator} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
-import {ArtObject} from '../api/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ArtObject} from '../api/types';
 
 type BookmarkedArtObject = {
   bookmarks: ArtObject[];
   getBookmarks: () => ArtObject[];
   addBookMarks: (artObject: ArtObject) => void;
   deleteBookmarks: (artObjectId: string) => void;
-  getBookmarkById: (id: string) => ArtObject | undefined;
+  getBookmarkById: (id?: string) => ArtObject | undefined;
   updateBookmarks: (artObject: ArtObject) => void;
 };
 
-export type UserAction = 'manage' | 'location' | undefined;
+export type UserAction = 'manage' | 'search' | undefined;
 type BookmarkUserAction = {
   action?: UserAction;
   getCurrentAction: () => UserAction;

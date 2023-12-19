@@ -1,6 +1,6 @@
-import {ROUTES} from './routes';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ROUTES} from './routes';
 import {ArtObject} from '../api/types';
 
 export type MuseumStacksRoutePrams = {

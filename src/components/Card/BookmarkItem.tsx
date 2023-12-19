@@ -1,10 +1,10 @@
-import {ArtObject} from '../../api/types.ts';
-import FastImage from 'react-native-fast-image';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {BookmarkOverlay} from '../BookmarkOverlay.tsx';
+import FastImage from 'react-native-fast-image';
+import {ArtObject} from '../../api/types.ts';
+import {BookmarkOverlay} from '../BookmarkOverlay';
 import {userUserAction} from '../../store';
 import {useAppNavigation} from '../../hooks/appNavigation';
-import {ROUTES} from '../../router/routes.ts';
+import {ROUTES} from '../../router/routes';
 
 export const BookmarkItem = (props: ArtObject) => {
   const router = useAppNavigation();

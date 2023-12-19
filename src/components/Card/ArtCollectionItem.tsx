@@ -1,11 +1,11 @@
-import {ArtObject} from '../../api/types';
+import {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {ArtObject} from '../../api/types';
 import {ArrowForward, Bookmark, EmptyBookmark} from '../icons';
 import {useAppNavigation} from '../../hooks/appNavigation';
 import {ROUTES} from '../../router/routes';
 import {useBookmarkStore} from '../../store';
-import {useCallback} from 'react';
 
 type ArtCollectionItemProps = ArtObject;
 export const ArtCollectionItem = (props: ArtCollectionItemProps) => {

@@ -25,7 +25,7 @@ export const BookmarkOverlay = ({
           </TouchableOpacity>
         </>
       )}
-      {getCurrentAction() === 'location' && (
+      {getCurrentAction() === 'search' && (
         <Text style={styles.location}>{bookmark?.principalOrFirstMaker}</Text>
       )}
     </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 4,
     marginVertical: 4,
-    opacity: 0.6,
+    opacity: 0.5,
   },
   location: {
     color: 'white',

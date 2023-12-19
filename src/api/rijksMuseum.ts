@@ -9,12 +9,15 @@ export async function getRijksArtCollection({
   imgOnly = true,
   artist = '',
 }) {
-  const url = `${RIKS_API_URL}${artPieceId}?key=${RIJKS_KEY}&p=${page}&ps=${resultsPerPage}&imgonly=${imgOnly}${
-    artist.length > 0 ? `&involvedMaker=${artist}` : ''
-  }`;
-
+  if (!RIJKS_KEY || !RIKS_API_URL) {
+    throw new Error('RIJKS_KEY or RIKS_API_URL not set');
+  }
   try {
+    const url = `${RIKS_API_URL}${artPieceId}?key=${RIJKS_KEY}&p=${page}&ps=${resultsPerPage}&imgonly=${imgOnly}${
+      artist.length > 0 ? `&involvedMaker=${artist}` : ''
+    }`;
     const response = await axios.get<RijksDataApiResponse>(url);
+
     return response.data;
   } catch (error) {
     throw new Error('API Error');

@@ -35,17 +35,21 @@ export const ArtScreen = () => {
   });
 
   const {handleDownloadImage} = useDownloadImage();
-  const {getBookmarkById, deleteBookmarks, addBookMarks} = useBookmarkStore();
+  const {getBookmarkById, addBookMarks} = useBookmarkStore();
   const bookmarkStatus = getBookmarkById(params.id) ? 'Bookmarked' : 'Bookmark';
   const handleBookmarkStatusClick = useCallback(
     (id?: string) => {
-      if (id && getBookmarkById(id)) {
-        deleteBookmarks(id);
-      } else if (!getBookmarkById(id) && artPiece?.artObject) {
+      if (!getBookmarkById(id) && artPiece?.artObject) {
         addBookMarks(artPiece.artObject);
       }
     },
-    [addBookMarks, artPiece?.artObject, deleteBookmarks, getBookmarkById],
+    [addBookMarks, artPiece?.artObject, getBookmarkById],
+  );
+  const getIsImgSavedInGallery = useCallback(
+    () =>
+      params.webImage?.url?.includes('file:///') ||
+      getBookmarkById(params.id)?.webImage?.url?.includes('file:///'),
+    [getBookmarkById, params.id, params.webImage?.url],
   );
 
   return (
@@ -75,20 +79,21 @@ export const ArtScreen = () => {
 
               <View style={styles.download}>
                 <TouchableOpacity
+                  style={styles.artQuickAction}
                   onPress={() => handleBookmarkStatusClick(params?.id)}
                   disabled={getBookmarkById(params.id) !== undefined}>
-                  <View style={styles.artQuickAction}>
-                    <Bookmark
-                      fill={
-                        getBookmarkById(params.id) !== undefined
-                          ? appTheme.colors.primary
-                          : appTheme.colors.text
-                      }
-                    />
-                    <Text style={{color: 'white'}}>{bookmarkStatus}</Text>
-                  </View>
+                  <Bookmark
+                    fill={
+                      getBookmarkById(params.id) !== undefined
+                        ? appTheme.colors.primary
+                        : appTheme.colors.text
+                    }
+                  />
+                  <Text style={{color: 'white'}}>{bookmarkStatus}</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
+                  disabled={getIsImgSavedInGallery()}
                   onPress={async () => {
                     if (params?.id && params.webImage?.url) {
                       await handleDownloadImage(
@@ -98,8 +103,21 @@ export const ArtScreen = () => {
                     }
                   }}
                   style={styles.artQuickAction}>
-                  <Download />
-                  <Text style={{color: 'white'}}>Download image</Text>
+                  <Download
+                    width={12}
+                    height={12}
+                    color={
+                      getIsImgSavedInGallery()
+                        ? appTheme.colors.primary
+                        : appTheme.colors.text
+                    }
+                  />
+                  <Text style={{color: 'white'}}>
+                    {' '}
+                    {getIsImgSavedInGallery()
+                      ? 'Saved in Gallery'
+                      : 'Download image'}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>

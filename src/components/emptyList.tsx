@@ -2,15 +2,12 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {appTheme} from '../theme';
 
-type LoadingProps = {
-  isLoading: boolean;
-};
-export const EmptyList = ({isLoading}: LoadingProps) => {
-  return isLoading ? (
+export const EmptyList = () => {
+  return (
     <View style={styles.container}>
       <Text style={styles.title}>Empty ...</Text>
     </View>
-  ) : null;
+  );
 };
 
 const styles = StyleSheet.create({

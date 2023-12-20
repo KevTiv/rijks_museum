@@ -36,16 +36,16 @@ class DownloadRijksArtImage: RCTEventEmitter {
     }
     task.resume()
   }
-  
+
   // MARK: - Save image to photo gallery
   private func saveImageToPhotos(_ image: UIImage, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     if #available(iOS 14, *) {
       PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
         switch status {
-        case .authorized, .limited:
-          self.performSave(image, resolve: resolve, reject: reject)
-        default:
-          reject("PERMISSION_DENIED", "Access to the photo library was denied", nil)
+            case .authorized, .limited:
+              self.performSave(image, resolve: resolve, reject: reject)
+            default:
+              reject("PERMISSION_DENIED", "Access to the photo library was denied", nil)
         }
       }
     } else {

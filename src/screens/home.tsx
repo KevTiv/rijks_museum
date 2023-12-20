@@ -18,7 +18,7 @@ export const HomeScreen = () => {
       <Loading isLoading={isLoading} />
       {homeArtList && !isLoading && (
         <FlashList
-          data={homeArtList?.artObjects}
+          data={homeArtList.artObjects}
           keyExtractor={(item, index) => item?.id ?? index.toString()}
           renderItem={({item}) => <ArtCollectionItem {...item} />}
           estimatedItemSize={450}

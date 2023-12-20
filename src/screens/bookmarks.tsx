@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {FlashList} from '@shopify/flash-list';
 
 import {useBookmarkStore, UserAction, userUserAction} from '../store';

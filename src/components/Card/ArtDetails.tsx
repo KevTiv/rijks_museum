@@ -14,6 +14,7 @@ import {
   RootTabNavigationParams,
   MuseumStacksRoutePrams,
 } from '../../router/route.types.ts';
+import {MotiView} from 'moti';
 
 type ArtDetailsProps = {
   router: AppStackNavigation<
@@ -39,7 +40,9 @@ export const ArtDetails = ({
 }: ArtDetailsProps) => {
   return artPiece ? (
     <>
-      <View>
+      <MotiView
+        from={{translateY: 16, opacity: 0}}
+        animate={{translateY: 0, opacity: 1}}>
         <TouchableWithoutFeedback
           onPress={() => {
             if (artPiece?.artObject?.principalMaker) {
@@ -52,65 +55,74 @@ export const ArtDetails = ({
             {artPiece?.artObject?.principalMaker}
           </Text>
         </TouchableWithoutFeedback>
+      </MotiView>
 
-        <View style={styles.download}>
-          <TouchableOpacity
-            style={styles.artQuickAction}
-            onPress={() => handleBookmarkStatusClick(params?.id)}
-            disabled={getBookmarkById(params.id) !== undefined}>
-            <Bookmark
-              fill={
-                getBookmarkById(params.id) !== undefined
-                  ? appTheme.colors.primary
-                  : appTheme.colors.text
-              }
-            />
-            <Text style={{color: 'white'}}>{bookmarkStatus}</Text>
-          </TouchableOpacity>
+      <MotiView
+        from={{translateY: 16}}
+        animate={{translateY: 0}}
+        style={styles.download}>
+        <TouchableOpacity
+          style={styles.artQuickAction}
+          onPress={() => handleBookmarkStatusClick(params?.id)}
+          disabled={getBookmarkById(params.id) !== undefined}>
+          <Bookmark
+            fill={
+              getBookmarkById(params.id) !== undefined
+                ? appTheme.colors.primary
+                : appTheme.colors.text
+            }
+          />
+          <Text style={{color: 'white'}}>{bookmarkStatus}</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            disabled={getIsImgSavedInGallery()}
-            onPress={async () => {
-              if (params?.id && params.webImage?.url) {
-                await handleDownloadImage(params?.id, params.webImage?.url);
-              }
-            }}
-            style={styles.artQuickAction}>
-            <Download
-              width={12}
-              height={12}
-              color={
-                getIsImgSavedInGallery()
-                  ? appTheme.colors.primary
-                  : appTheme.colors.text
-              }
-            />
-            <Text style={{color: 'white'}}>
-              {' '}
-              {getIsImgSavedInGallery() ? 'Saved in Gallery' : 'Download image'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <TouchableOpacity
+          disabled={getIsImgSavedInGallery()}
+          onPress={async () => {
+            if (params?.id && params.webImage?.url) {
+              await handleDownloadImage(params?.id, params.webImage?.url);
+            }
+          }}
+          style={styles.artQuickAction}>
+          <Download
+            width={12}
+            height={12}
+            color={
+              getIsImgSavedInGallery()
+                ? appTheme.colors.primary
+                : appTheme.colors.text
+            }
+          />
+          <Text style={{color: 'white'}}>
+            {' '}
+            {getIsImgSavedInGallery() ? 'Saved in Gallery' : 'Download image'}
+          </Text>
+        </TouchableOpacity>
+      </MotiView>
 
-      <Text style={styles.title}>{params?.longTitle}</Text>
-      <Text style={styles.description}>
-        {artPiece?.artObject?.plaqueDescriptionEnglish}
-      </Text>
-      <Text style={styles.description}>
-        {artPiece?.artObject?.label?.makerLine}
-      </Text>
-      <Text style={styles.description}>
-        {artPiece?.artObject?.label?.description}
-      </Text>
-      <Text style={styles.subLabel}>
-        Dimensions: {artPiece?.artObject?.subTitle}
-      </Text>
-      {artPiece.artObject?.location && (
-        <Text style={styles.subLabel}>
-          Location: {artPiece?.artObject?.location}
+      <MotiView from={{translateY: 16}} animate={{translateY: 0}}>
+        <Text style={styles.title}>{params?.longTitle}</Text>
+      </MotiView>
+      <MotiView
+        from={{translateY: 16, opacity: 0}}
+        animate={{translateY: 0, opacity: 1}}>
+        <Text style={styles.description}>
+          {artPiece?.artObject?.plaqueDescriptionEnglish}
         </Text>
-      )}
+        <Text style={styles.description}>
+          {artPiece?.artObject?.label?.makerLine}
+        </Text>
+        <Text style={styles.description}>
+          {artPiece?.artObject?.label?.description}
+        </Text>
+        <Text style={styles.subLabel}>
+          Dimensions: {artPiece?.artObject?.subTitle}
+        </Text>
+        {artPiece.artObject?.location && (
+          <Text style={styles.subLabel}>
+            Location: {artPiece?.artObject?.location}
+          </Text>
+        )}
+      </MotiView>
     </>
   ) : null;
 };

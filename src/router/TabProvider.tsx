@@ -7,13 +7,17 @@ import {ROUTES} from './routes';
 import {Museum} from '../components/icons';
 import {Bookmark} from '../components/icons/bookmark';
 import {appTheme} from '../theme';
+import {BackButton} from '../components/BackButton.tsx';
 
 const Tab = createBottomTabNavigator<RootTabNavigationParams>();
 
 export const TabNavigator = () => {
   return (
     <NavigationContainer theme={appTheme}>
-      <Tab.Navigator initialRouteName={ROUTES.MUSEUM}>
+      <Tab.Navigator
+        backBehavior="history"
+        initialRouteName={ROUTES.MUSEUM}
+        screenOptions={{headerLeft: BackButton}}>
         <Tab.Screen
           name={ROUTES.MUSEUM}
           component={MuseumStackNavigation}

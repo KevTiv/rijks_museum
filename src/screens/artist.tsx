@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import {useQuery} from '@tanstack/react-query';
 import {useAppRoute} from '../hooks/appNavigation';
@@ -9,6 +9,7 @@ import {ScreenContainer} from '../components/screenContainer';
 import {appTheme} from '../theme';
 import {Loading} from '../components/loading';
 import {EmptyList} from '../components/emptyList';
+import {MotiView} from 'moti';
 
 export const ArtistScreen = () => {
   const {params} = useAppRoute<typeof ROUTES.ARTIST>();
@@ -28,9 +29,12 @@ export const ArtistScreen = () => {
       <Loading isLoading={isLoading} />
       {artist && (
         <>
-          <View style={styles.titleContainer}>
+          <MotiView
+            from={{translateY: 16}}
+            animate={{translateY: 0}}
+            style={styles.titleContainer}>
             <Text style={styles.artistName}>{params.name}</Text>
-          </View>
+          </MotiView>
           <FlashList
             data={artist?.artObjects}
             keyExtractor={(item, index) => item?.id ?? index.toString()}

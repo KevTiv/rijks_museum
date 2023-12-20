@@ -1,4 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {MotiView} from 'moti';
 import {Trash, Download} from './icons';
 import {useBookmarkStore, userUserAction} from '../store';
 import {useDownloadImage} from '../hooks/downloadImage';
@@ -26,7 +27,9 @@ export const BookmarkOverlay = ({
         </>
       )}
       {getCurrentAction() === 'search' && (
-        <Text style={styles.location}>{bookmark?.principalOrFirstMaker}</Text>
+        <MotiView from={{translateY: 4}} animate={{translateY: 0}}>
+          <Text style={styles.location}>{bookmark?.principalOrFirstMaker}</Text>
+        </MotiView>
       )}
     </View>
   ) : null;

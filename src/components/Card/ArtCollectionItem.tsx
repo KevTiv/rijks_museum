@@ -1,6 +1,7 @@
 import {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {MotiView} from 'moti';
 import {ArtObject} from '../../api/types';
 import {ArrowForward, Bookmark, EmptyBookmark} from '../icons';
 import {useAppNavigation} from '../../hooks/appNavigation';
@@ -35,10 +36,13 @@ export const ArtCollectionItem = (props: ArtCollectionItemProps) => {
         source={{uri: webImage?.url}}
         resizeMode={FastImage.resizeMode.cover}
       />
-      <View style={styles.info}>
+      <MotiView
+        from={{translateY: 16}}
+        animate={{translateY: 0}}
+        style={styles.info}>
         <Text style={styles.cardTitle}>{longTitle}</Text>
         <Text style={styles.artist}>By {principalOrFirstMaker}</Text>
-      </View>
+      </MotiView>
       <TouchableOpacity
         style={styles.bottomNavBtn}
         disabled={id === undefined}

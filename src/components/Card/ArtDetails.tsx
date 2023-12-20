@@ -1,20 +1,20 @@
+import React from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
 } from 'react-native';
-import {ROUTES} from '../../router/routes.ts';
+import {MotiView} from 'moti';
+import {ROUTES} from '../../router/routes';
 import {Bookmark, Download} from '../icons';
 import {appTheme} from '../../theme';
-import {ArtObject, RijksDataApiResponse} from '../../api/types.ts';
+import {ArtObject, RijksDataApiResponse} from '../../api/types';
 import {
   AppStackNavigation,
   RootTabNavigationParams,
   MuseumStacksRoutePrams,
-} from '../../router/route.types.ts';
-import {MotiView} from 'moti';
+} from '../../router/route.types';
 
 type ArtDetailsProps = {
   router: AppStackNavigation<
@@ -40,9 +40,7 @@ export const ArtDetails = ({
 }: ArtDetailsProps) => {
   return artPiece ? (
     <>
-      <MotiView
-        from={{translateY: 16, opacity: 0}}
-        animate={{translateY: 0, opacity: 1}}>
+      <MotiView from={{translateY: 26}} animate={{translateY: 0}}>
         <TouchableWithoutFeedback
           onPress={() => {
             if (artPiece?.artObject?.principalMaker) {
@@ -72,7 +70,7 @@ export const ArtDetails = ({
                 : appTheme.colors.text
             }
           />
-          <Text style={{color: 'white'}}>{bookmarkStatus}</Text>
+          <Text style={{color: appTheme.colors.text}}>{bookmarkStatus}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -92,7 +90,7 @@ export const ArtDetails = ({
                 : appTheme.colors.text
             }
           />
-          <Text style={{color: 'white'}}>
+          <Text style={{color: appTheme.colors.text}}>
             {' '}
             {getIsImgSavedInGallery() ? 'Saved in Gallery' : 'Download image'}
           </Text>

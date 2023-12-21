@@ -1,5 +1,6 @@
 import {FlashList} from '@shopify/flash-list';
 import {useQuery} from '@tanstack/react-query';
+import {AnimatePresence} from 'moti';
 import {ROUTES} from '../router/routes';
 import {getRijksArtCollection} from '../api/rijksMuseum';
 import {ArtCollectionItem} from '../components/Card/ArtCollectionItem';
@@ -16,15 +17,17 @@ export const HomeScreen = () => {
   return (
     <ScreenContainer>
       <Loading isLoading={isLoading} />
-      {homeArtList && (
-        <FlashList
-          data={homeArtList.artObjects}
-          keyExtractor={(item, index) => item?.id ?? index.toString()}
-          renderItem={({item}) => <ArtCollectionItem {...item} />}
-          estimatedItemSize={450}
-          ListEmptyComponent={EmptyList}
-        />
-      )}
+      <AnimatePresence>
+        {homeArtList && (
+          <FlashList
+            data={homeArtList.artObjects}
+            keyExtractor={(item, index) => item?.id ?? index.toString()}
+            renderItem={({item}) => <ArtCollectionItem {...item} />}
+            estimatedItemSize={450}
+            ListEmptyComponent={EmptyList}
+          />
+        )}
+      </AnimatePresence>
     </ScreenContainer>
   );
 };

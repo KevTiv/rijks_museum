@@ -2,11 +2,11 @@ import {useCallback} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {ScreenContainer} from '../components/screenContainer';
 import FastImage from 'react-native-fast-image';
+import {AnimatePresence} from 'moti';
 import {useAppNavigation, useAppRoute} from '../hooks/appNavigation';
 import {ROUTES} from '../router/routes';
 import {useQuery} from '@tanstack/react-query';
 import {getRijksArtCollection} from '../api/rijksMuseum';
-import {appTheme} from '../theme';
 import {useBookmarkStore} from '../store';
 import {Loading} from '../components/loading';
 import {useDownloadImage} from '../hooks/downloadImage';
@@ -55,16 +55,18 @@ export const ArtScreen = () => {
           resizeMode={FastImage.resizeMode.cover}
         />
         <Loading isLoading={isLoading} />
-        <ArtDetails
-          router={router}
-          params={params}
-          artPiece={artPiece}
-          getBookmarkById={getBookmarkById}
-          getIsImgSavedInGallery={getIsImgSavedInGallery}
-          bookmarkStatus={bookmarkStatus}
-          handleBookmarkStatusClick={handleBookmarkStatusClick}
-          handleDownloadImage={handleDownloadImage}
-        />
+        <AnimatePresence>
+          <ArtDetails
+            router={router}
+            params={params}
+            artPiece={artPiece}
+            getBookmarkById={getBookmarkById}
+            getIsImgSavedInGallery={getIsImgSavedInGallery}
+            bookmarkStatus={bookmarkStatus}
+            handleBookmarkStatusClick={handleBookmarkStatusClick}
+            handleDownloadImage={handleDownloadImage}
+          />
+        </AnimatePresence>
       </ScrollView>
     </ScreenContainer>
   );

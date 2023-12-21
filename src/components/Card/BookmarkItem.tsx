@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {AnimatePresence, MotiView} from 'moti';
+import {MotiView} from 'moti';
 import {ArtObject} from '../../api/types';
 import {BookmarkOverlay} from '../BookmarkOverlay';
 import {userUserAction} from '../../store';
@@ -13,7 +13,7 @@ export const BookmarkItem = (props: ArtObject) => {
   const isOverlayApplied = getCurrentAction() !== undefined;
 
   return (
-    <AnimatePresence presenceAffectsLayout={true}>
+    <>
       <TouchableOpacity
         onPress={() => router.navigate(ROUTES.ART, props)}
         disabled={isOverlayApplied}
@@ -38,7 +38,7 @@ export const BookmarkItem = (props: ArtObject) => {
           url={props.webImage?.url}
         />
       </TouchableOpacity>
-    </AnimatePresence>
+    </>
   );
 };
 

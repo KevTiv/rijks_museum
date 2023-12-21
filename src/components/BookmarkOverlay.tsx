@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {MotiView} from 'moti';
+import {AnimatePresence, MotiView} from 'moti';
 import {Trash, Download} from './icons';
 import {useBookmarkStore, userUserAction} from '../store';
 import {useDownloadImage} from '../hooks/downloadImage';
@@ -16,21 +16,25 @@ export const BookmarkOverlay = ({
 
   return isOverlayApplied ? (
     <View style={styles.container}>
-      {getCurrentAction() === 'manage' && (
-        <>
-          <TouchableOpacity onPress={() => handleDownloadImage(id, url)}>
-            <Download width={44} height={44} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => deleteBookmarks(id)}>
-            <Trash width={44} height={44} />
-          </TouchableOpacity>
-        </>
-      )}
-      {getCurrentAction() === 'search' && (
-        <MotiView from={{translateY: 4}} animate={{translateY: 0}}>
-          <Text style={styles.location}>{bookmark?.principalOrFirstMaker}</Text>
-        </MotiView>
-      )}
+      <AnimatePresence>
+        {getCurrentAction() === 'manage' && (
+          <>
+            <TouchableOpacity onPress={() => handleDownloadImage(id, url)}>
+              <Download width={44} height={44} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteBookmarks(id)}>
+              <Trash width={44} height={44} />
+            </TouchableOpacity>
+          </>
+        )}
+        {getCurrentAction() === 'search' && (
+          <MotiView from={{translateY: 4}} animate={{translateY: 0}}>
+            <Text style={styles.location}>
+              {bookmark?.principalOrFirstMaker}
+            </Text>
+          </MotiView>
+        )}
+      </AnimatePresence>
     </View>
   ) : null;
 };

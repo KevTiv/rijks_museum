@@ -23,11 +23,21 @@ export async function getRijksArtCollection({
   if (!RIJKS_KEY || !RIKS_API_URL) {
     throw new Error('RIJKS_KEY or RIKS_API_URL not set');
   }
+
   try {
-    const url = `${RIKS_API_URL}${artPieceId}?key=${RIJKS_KEY}&p=${page}&ps=${resultsPerPage}&imgonly=${imgOnly}${
-      artist.length > 0 ? `&involvedMaker=${artist}` : ''
-    }`;
-    const response = await axios.get<RijksDataApiResponse>(url);
+    const params = {
+      key: RIJKS_KEY,
+      p: page,
+      ps: resultsPerPage,
+      imgonly: imgOnly,
+      involvedMaker: artist,
+    };
+
+    const endpoint = artPieceId
+      ? `${RIKS_API_URL}/${artPieceId}`
+      : RIKS_API_URL;
+
+    const response = await axios.get<RijksDataApiResponse>(endpoint, {params});
 
     return response.data;
   } catch (error) {

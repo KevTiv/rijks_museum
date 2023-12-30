@@ -1,10 +1,14 @@
-import {TouchableOpacity} from 'react-native';
-import {useCallback} from 'react';
-import {useAppNavigation} from '../hooks/appNavigation.ts';
+import {StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
+import React, {useCallback} from 'react';
+import {useAppNavigation} from '../hooks/appNavigation';
 import {ArrowHead} from './icons';
-import {appTheme} from '../theme';
+import {useTheme} from '../store';
 
-export const BackButton = () => {
+type BackButtonProps = {
+  style?: StyleProp<ViewStyle>;
+};
+export const BackButton = ({style}: BackButtonProps) => {
+  const {theme} = useTheme();
   const router = useAppNavigation();
   const handleGoBack = useCallback(async () => {
     if (router.canGoBack()) {
@@ -13,8 +17,8 @@ export const BackButton = () => {
   }, [router]);
 
   return (
-    <TouchableOpacity onPress={handleGoBack}>
-      <ArrowHead color={appTheme.colors.primary} />
+    <TouchableOpacity style={style} onPress={handleGoBack}>
+      <ArrowHead color={theme.colors.primary} />
     </TouchableOpacity>
   );
 };

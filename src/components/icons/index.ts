@@ -4,6 +4,8 @@ import {Museum} from './museum';
 import {Trash} from './trash';
 import {Download} from './download';
 import {ArrowHead} from './arrowHead';
+import {Moon} from './moon';
+import {Sun} from './sun';
 
 export {
   ArrowForward,
@@ -13,4 +15,6 @@ export {
   Trash,
   Download,
   ArrowHead,
+  Moon,
+  Sun,
 };

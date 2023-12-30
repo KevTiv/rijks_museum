@@ -1,12 +1,13 @@
+import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useQuery} from '@tanstack/react-query';
 import {AnimatePresence} from 'moti';
 import {ROUTES} from '../router/routes';
 import {getRijksArtCollection} from '../api/rijksMuseum';
-import {ArtCollectionItem} from '../components/Card/ArtCollectionItem';
-import {ScreenContainer} from '../components/screenContainer';
-import {Loading} from '../components/loading';
-import {EmptyList} from '../components/emptyList';
+import {ArtCollectionItem} from '../components/card/ArtCollectionItem';
+import {ScreenContainer} from '../components/ScreenContainer';
+import {Loading} from '../components/Loading';
+import {EmptyList} from '../components/EmptyList';
 
 export const HomeScreen = () => {
   const {data: homeArtList, isLoading} = useQuery({
@@ -14,16 +15,19 @@ export const HomeScreen = () => {
     queryFn: () => getRijksArtCollection({resultsPerPage: 450}),
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <ScreenContainer>
-      <Loading isLoading={isLoading} />
       <AnimatePresence>
         {homeArtList && (
           <FlashList
             data={homeArtList.artObjects}
             keyExtractor={(item, index) => item?.id ?? index.toString()}
             renderItem={({item}) => <ArtCollectionItem {...item} />}
-            estimatedItemSize={450}
+            estimatedItemSize={150}
             ListEmptyComponent={EmptyList}
           />
         )}

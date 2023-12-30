@@ -16,8 +16,16 @@ export const MuseumStackNavigation = () => {
         component={HomeScreen}
         options={{headerLeft: undefined}}
       />
-      <Stack.Screen name={ROUTES.ART} component={ArtScreen} />
-      <Stack.Screen name={ROUTES.ARTIST} component={ArtistScreen} />
+      <Stack.Screen
+        name={ROUTES.ART}
+        component={ArtScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={ROUTES.ARTIST}
+        component={ArtistScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

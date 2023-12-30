@@ -491,7 +491,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 84234XZYN4;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = rijks_museum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -523,7 +523,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 84234XZYN4;
 				INFOPLIST_FILE = rijks_museum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

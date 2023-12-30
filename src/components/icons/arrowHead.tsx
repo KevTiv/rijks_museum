@@ -1,11 +1,10 @@
 import {StyleSheet} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
-import {appTheme} from '../../theme';
 
 export const ArrowHead = ({
   width = 30,
   height = 30,
-  color = appTheme.colors.primary,
+  color = 'currentColor',
 }) => {
   return (
     <Svg

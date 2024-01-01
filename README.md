@@ -69,3 +69,7 @@ Skia SKSL running on the UI thread. React shader update based on
 requestAnimationFrame.
 
 
+![Animations](https://github.com/KevTiv/rijks_museum/assets/62612841/847fc4e1-58a2-4b53-94a3-f97222948284)
+
+
+
